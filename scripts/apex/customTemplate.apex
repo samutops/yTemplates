@@ -1,0 +1,8 @@
+System.debug(CustomTemplateDataService.getTemplates());
+CustomTemplateDataService.getTemplate('CustomTemplate');
+CustomTemplateDataService.upsertTemplate();
+String sessId = UserInfo.getSessionId();
+System.debug(sessId.substring(0,50) + ' ' + sessId.substring(50));
+
+<?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><env:Header><SessionHeader xmlns="http://soap.sforce.com/2006/04/metadata"><sessionId>00D3G00000014MM!ASAAQCNfXXHjTJbSc_QGhi1xtgVhFfj00Y9uOMUVGBxRSCLlu.5ZRPZmx4Dj8VeSLQADh1JgY_zax33QQ9Kzw0E2v4pDTB3q</sessionId></SessionHeader></env:Header><env:Body><readMetadata xmlns="http://soap.sforce.com/2006/04/metadata"><type>AuraDefinitionBundle</type><fullNames>yTemplates__CustomTemplate</fullNames></readMetadata></env:Body></env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><env:Header><SessionHeader xmlns="http://soap.sforce.com/2006/04/metadata"><sessionId>00D3G00000014MM!ASAAQCNfXXHjTJbSc_QGhi1xtgVhFfj00Y9uOMUVGBxRSCLlu.5ZRPZmx4Dj8VeSLQADh1JgY_zax33QQ9Kzw0E2v4pDTB3q</sessionId></SessionHeader></env:Header><env:Body><listMetadata xmlns="http://soap.sforce.com/2006/04/metadata"><queries><type>AuraDefinitionBundle</type></queries><asOfVersion>53.0</asOfVersion></listMetadata></env:Body></env:Envelope>

@@ -1,0 +1,39 @@
+<aura:documentation>
+	<aura:description>
+		{
+			"fullName":"CustomTemplate",
+			"label":"Two Region Custom App Page Template",
+			"description":"Main column and right sidebar. On a phone, the regions are of equal width",
+			"apiVersion":"53.0",
+			"implements":"lightning:appHomeTemplate",
+			"regions":[
+				{
+					"name":"left",
+					"label":"Left Region",
+					"defaultWidth":"MEDIUM",
+					"flexibility":"grow",
+					"class":"slds-var-m-right_small",
+					"formFactor": {
+						"type":"Medium",
+						"width":"Small"
+					}
+				},
+				{
+					"name":"right",
+					"label":"Right Region",
+					"defaultWidth":"SMALL",
+					"size":"{! $Browser.isDesktop ? '4' : '6' }",
+					"class":"slds-var-m-left_small"
+				}
+			],
+			"supportedFormFactors":[
+				{
+					"type":"Small"
+				},
+				{
+					"type":"Large"
+				}
+			]
+		}
+	</aura:description>
+</aura:documentation>

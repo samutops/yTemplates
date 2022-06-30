@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <readMetadataResponse>
+            <result>
+                <records xsi:type="AuraDefinitionBundle">
+                    <fullName>yTemplates__CustomTemplate</fullName>
+                    <SVGContent>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c3ZnIHdpZHRoPSIxMjBweCIgaGVpZ2h0PSIxMjBweCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+Cgk8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmls</SVGContent>
+                    <apiVersion>54.0</apiVersion>
+                    <auraDefinitions>
+                        <auraDefinition>
+                            <defType>2(db=2,api=COMPONENT)</defType>
+                            <source>PGF1cmE6Y29tcG9uZW50IGltcGxlbWVudHM9ImxpZ2h0bmluZzpyZWNvcmRIb21lVGVtcGxhdGUiIGRlc2NyaXB0aW9uPSJNYWluIGNvbHVtbiBhbmQgcmlnaHQgc2lkZWJhci4gT24gYSBwaG9uZSwgdGhlIHJlZ2lvbnMgYXJlIG9mIGVxdWFsIHdpZHRoIj4KICAgIDxhdXJhOmF0dHJpYnV0ZSBuYW1lPSJsZWZ0IiB0eXBlPSJBdXJhLkNvbXBvbmVudFtdIiAvPgogICAgPGF1cmE6YXR0cmlidXRlIG5hbWU9InJpZ2h0IiB0eXBlPSJBdXJhLkNvbXBv</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>1(db=1,api=CONTROLLER)</defType>
+                            <source>KHsKICAgIG15QWN0aW9uIDogZnVuY3Rpb24oY29tcG9uZW50LCBldmVudCwgaGVscGVyKSB7CgogICAgfQp9KQ==</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>4(db=4,api=HELPER)</defType>
+                            <source>KHsKICAgIGhlbHBlck1ldGhvZCA6IGZ1bmN0aW9uKCkgewoKICAgIH0KfSk=</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>12(db=12,api=DOCUMENTATION)</defType>
+                            <source>PGF1cmE6ZG9jdW1lbnRhdGlvbj4KCTxhdXJhOmRlc2NyaXB0aW9uPkRvY3VtZW50YXRpb248L2F1cmE6ZGVzY3JpcHRpb24+Cgk8YXVyYTpleGFtcGxlIG5hbWU9IkV4YW1wbGVOYW1lIiByZWY9ImV4YW1wbGVDb21wb25lbnROYW1lIiBsYWJlbD0iTGFiZWwiPgoJCUV4YW1wbGUgRGVzY3JpcHRpb24KCTwvYXVyYTpleGFtcGxlPgo8L2F1cmE6ZG9jdW1lbnRhdGlvbj4=</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>7(db=7,api=RENDERER)</defType>
+                            <source>KHsKCi8vIFlvdXIgcmVuZGVyZXIgbWV0aG9kIG92ZXJyaWRlcyBnbyBoZXJlCgp9KQ==</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>14(db=14,api=DESIGN)</defType>
+                            <source>PGRlc2lnbjpjb21wb25lbnQgbGFiZWw9IlR3byBSZWdpb24gQ3VzdG9tIEFwcCBQYWdlIFRlbXBsYXRlIj4KICAgIDxmbGV4aXBhZ2U6dGVtcGxhdGUgPgogICAgICAgIDwhLS0gVGhlIGRlZmF1bHQgd2lkdGggZm9yIHRoZSAibGVmdCIgcmVnaW9uIGlzICJNRURJVU0iLiBJbiB0YWJsZXRzLAogICAgICAgIHRoZSB3aWR0aCBpcyAiU01BTEwiIC0tPgogICAgICAgICAgICA8ZmxleGlwYWdlOnJlZ2lvbiBuYW1lPSJsZWZ0IiBsYWJlbD0iTGVmdCBS</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>15(db=15,api=SVG)</defType>
+                            <source>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c3ZnIHdpZHRoPSIxMjBweCIgaGVpZ2h0PSIxMjBweCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+Cgk8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmls</source>
+                        </auraDefinition>
+                        <auraDefinition>
+                            <defType>8(db=8,api=STYLE)</defType>
+                            <source>LlRISVMgewp9</source>
+                        </auraDefinition>
+                    </auraDefinitions>
+                    <controllerContent>KHsKICAgIG15QWN0aW9uIDogZnVuY3Rpb24oY29tcG9uZW50LCBldmVudCwgaGVscGVyKSB7CgogICAgfQp9KQ==</controllerContent>
+                    <description>A Lightning Component Bundle</description>
+                    <designContent>PGRlc2lnbjpjb21wb25lbnQgbGFiZWw9IlR3byBSZWdpb24gQ3VzdG9tIEFwcCBQYWdlIFRlbXBsYXRlIj4KICAgIDxmbGV4aXBhZ2U6dGVtcGxhdGUgPgogICAgICAgIDwhLS0gVGhlIGRlZmF1bHQgd2lkdGggZm9yIHRoZSAibGVmdCIgcmVnaW9uIGlzICJNRURJVU0iLiBJbiB0YWJsZXRzLAogICAgICAgIHRoZSB3aWR0aCBpcyAiU01BTEwiIC0tPgogICAgICAgICAgICA8ZmxleGlwYWdlOnJlZ2lvbiBuYW1lPSJsZWZ0IiBsYWJlbD0iTGVmdCBS</designContent>
+                    <documentationContent>PGF1cmE6ZG9jdW1lbnRhdGlvbj4KCTxhdXJhOmRlc2NyaXB0aW9uPkRvY3VtZW50YXRpb248L2F1cmE6ZGVzY3JpcHRpb24+Cgk8YXVyYTpleGFtcGxlIG5hbWU9IkV4YW1wbGVOYW1lIiByZWY9ImV4YW1wbGVDb21wb25lbnROYW1lIiBsYWJlbD0iTGFiZWwiPgoJCUV4YW1wbGUgRGVzY3JpcHRpb24KCTwvYXVyYTpleGFtcGxlPgo8L2F1cmE6ZG9jdW1lbnRhdGlvbj4=</documentationContent>
+                    <helperContent>KHsKICAgIGhlbHBlck1ldGhvZCA6IGZ1bmN0aW9uKCkgewoKICAgIH0KfSk=</helperContent>
+                    <markup>PGF1cmE6Y29tcG9uZW50IGltcGxlbWVudHM9ImxpZ2h0bmluZzpyZWNvcmRIb21lVGVtcGxhdGUiIGRlc2NyaXB0aW9uPSJNYWluIGNvbHVtbiBhbmQgcmlnaHQgc2lkZWJhci4gT24gYSBwaG9uZSwgdGhlIHJlZ2lvbnMgYXJlIG9mIGVxdWFsIHdpZHRoIj4KICAgIDxhdXJhOmF0dHJpYnV0ZSBuYW1lPSJsZWZ0IiB0eXBlPSJBdXJhLkNvbXBvbmVudFtdIiAvPgogICAgPGF1cmE6YXR0cmlidXRlIG5hbWU9InJpZ2h0IiB0eXBlPSJBdXJhLkNvbXBv</markup>
+                    <rendererContent>KHsKCi8vIFlvdXIgcmVuZGVyZXIgbWV0aG9kIG92ZXJyaWRlcyBnbyBoZXJlCgp9KQ==</rendererContent>
+                    <styleContent>LlRISVMgewp9</styleContent>
+                    <type>Component</type>
+                </records>
+            </result>
+        </readMetadataResponse>
+    </soapenv:Body>
+</soapenv:Envelope>
