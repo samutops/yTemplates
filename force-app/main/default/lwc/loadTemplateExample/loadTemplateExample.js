@@ -1,6 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import retrieveTemplate from '@salesforce/apex/CustomTemplateDataService.retrieveTemplate';
 import checkAsyncRequest from '@salesforce/apex/CustomTemplateDataService.checkAsyncRequest';
+import upsertTemplate from '@salesforce/apex/CustomTemplateDataService.upsertTemplate';
 import { Template } from 'c/templateService';
 
 export default class LoadTemplateExample extends LightningElement {
@@ -36,6 +37,16 @@ export default class LoadTemplateExample extends LightningElement {
     handleToMetadataClick() {
         let componentMetadata = this.template.toMetadata();
         console.log(JSON.parse(componentMetadata));
+    }
+
+    handleUpsertTemplateClick() {
+        upsertTemplate({ auraBundleJSON: this.template.toMetadata() })
+            .then((result) => {
+                console.log('All good!');
+            })
+            .catch((error) => {
+                console.log(JSON.stringify(error));
+            });
     }
 
     loadZip(zipFile) {

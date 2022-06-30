@@ -26,73 +26,56 @@ class Template {
     }
 
     getMarkup() {
-        let auraComponent = document.createElement("aura:component");
-        auraComponent.setAttribute("implements",this.implements);
-        auraComponent.setAttribute("description",this.description);
-        console.log(auraComponent.outerHTML);
+        let auraComponent = `<aura:component implements="${this.implements}" description="${this.description}">`;
 
-        this.regions.forEach(region => {
-            let regionComponent = document.createElement("aura:attribute");
-            regionComponent.setAttribute("name",region.name);
-            regionComponent.setAttribute("type","Aura.Component[]");
-            auraComponent.appendChild(regionComponent);
-        });
+            this.regions.forEach(region => {
+                auraComponent += `<aura:attribute name="${region.name}" type="Aura.Component[]" />`;
+            });
 
-        let lightningLayout = document.createElement("lightning:layout");
-        this.regions.forEach(region => {
-            let lightningLayoutItem = document.createElement("lightning:layoutItem");
-            if (region.flexibility) {
-                lightningLayoutItem.setAttribute("flexibility",region.flexibility);
-            }
-            if (region.size) {
-                lightningLayoutItem.setAttribute("size",region.size);
-            }
-            if (region.class) {
-                lightningLayoutItem.setAttribute("class",region.class);
-            }
-            lightningLayoutItem.innerHTML = `{!v.${region.name}}`;
-            lightningLayout.appendChild(lightningLayoutItem);
-        });
-        auraComponent.appendChild(lightningLayout);
+            auraComponent += '<lightning:layout>';
+            this.regions.forEach(region => {
+                auraComponent += `<lightning:layoutItem flexibility="${region.flexibility}" size="${region.size}" class="${region.class}">`;
+                    auraComponent += `{!v.${region.name}}`;
+                auraComponent += '</lightning:layoutItem>';
+            });
+            auraComponent += '</lightning:layout>';
 
-        return auraComponent.outerHTML;
+        auraComponent += '</aura:component>';
+        return auraComponent;
     }
 
     getDesign() {
-        let designComponent = document.createElement("design:component");
-        designComponent.setAttribute("label",this.label);
+        let designComponent = `<design:component label="${this.label}">`;
 
-        let flexipageTemplate = document.createElement("flexipage:template");
-        this.regions.forEach(region => {
-            let flexipageRegion = document.createElement("flexipage:region");
-            flexipageRegion.setAttribute("name",region.name);
-            flexipageRegion.setAttribute("label",region.label);
-            flexipageRegion.setAttribute("defaultWidth",region.defaultWidth);
+            designComponent += '<flexipage:template>';
+            this.regions.forEach(region => {
+                designComponent += `<flexipage:region name="${region.name}" label="${region.label}" defaultWidth="${region.defaultWidth}">`;
 
-            if (region.hasOwnProperty("formFactor")) {
-                let flexipageFormFactor = document.createElement("flexipage:formfactor");
-                flexipageFormFactor.setAttribute("type",region.formFactor.type);
-                flexipageFormFactor.setAttribute("width",region.formFactor.width);
-                flexipageRegion.appendChild(flexipageFormFactor);
-            }
+                if (region.hasOwnProperty("formFactor")) {
+                    designComponent += `<flexipage:formfactor type="${region.formFactor.type}" width="${region.formFactor.width}" />`;
+                }
 
-            flexipageTemplate.appendChild(flexipageRegion);
-        });
-        designComponent.appendChild(flexipageTemplate);
+                designComponent += '</flexipage:region>';
+            });
+            designComponent += '</flexipage:template>';
 
-        let designSupportedFormFactors = document.createElement("design:supportedFormFactors");
-        this.supportedFormFactors.forEach(formFactor => {
-            let designSupportedFormFactor = document.createElement("design:supportedFormFactor");
-            designSupportedFormFactor.setAttribute("type",formFactor.type);
-            designSupportedFormFactors.appendChild(designSupportedFormFactor);
-        });
-        designComponent.appendChild(designSupportedFormFactors);
+            designComponent += '<design:supportedFormFactors>';
+            this.supportedFormFactors.forEach(formFactor => {
+                designComponent += `<design:supportedFormFactor type="${formFactor.type}" />`;
+            });
+            designComponent += '</design:supportedFormFactors>';
 
-        return designComponent.outerHTML;
+        designComponent += '</design:component>';
+        return designComponent;
     }
 
     getDocumentation() {
-        return JSON.stringify(this);
+        let documentationComponent = '<aura:documentation>';
+            documentationComponent += '<aura:description>';
+                documentationComponent += JSON.stringify(this);
+            documentationComponent += '</aura:description>';
+        documentationComponent += '</aura:documentation>';
+        return documentationComponent;
     }
 };
 

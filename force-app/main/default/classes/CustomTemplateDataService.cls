@@ -71,15 +71,23 @@ public with sharing class CustomTemplateDataService {
 
     @AuraEnabled
     public static void upsertTemplate(String auraBundleJSON){
-        System.debug(auraBundleJSON);
-        /*try {
-            MetadataService.AuraDefinitionBundle auraBundle = (MetadataService.AuraDefinitionBundle)JSON.deserialize(auraBundleJSON, MetadataService.AuraDefinitionBundle.class);
+        try {
+            MetadataService.AuraDefinitionBundle auraBundle1 = (MetadataService.AuraDefinitionBundle)JSON.deserialize(auraBundleJSON, MetadataService.AuraDefinitionBundle.class);
+            
+            MetadataService.AuraDefinitionBundle auraBundle = new MetadataService.AuraDefinitionBundle();
+            auraBundle.fullName = auraBundle1.fullName;
+            auraBundle.type_x = auraBundle1.type_x;
+            auraBundle.markup = EncodingUtil.base64Encode(Blob.valueOf(auraBundle1.markup));
+            auraBundle.designContent = EncodingUtil.base64Encode(Blob.valueOf(auraBundle1.designContent));
+            auraBundle.documentationContent = EncodingUtil.base64Encode(Blob.valueOf(auraBundle1.documentationContent));
+            System.debug(auraBundle);
+
             MetadataService.MetadataPort service = createService();
             List<MetadataService.UpsertResult> results = service.upsertMetadata(new MetadataService.Metadata[] { auraBundle });
             handleUpsertResults(results[0]);
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
-        }*/
+        }
     }
 
     private static MetadataService.MetadataPort createService()
