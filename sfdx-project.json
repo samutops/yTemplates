@@ -6,7 +6,7 @@
     }
   ],
   "name": "yTemplates",
-  "namespace": "",
+  "namespace": "yTemplates",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "54.0"
 }
