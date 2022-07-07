@@ -1,7 +1,5 @@
 public with sharing class CustomTemplateDataService {
     
-// https://webcache.googleusercontent.com/search?q=cache:KpWOI72ylwsJ:https://gscloudsolutions.com/tips-tricks/using-named-credentials-with-the-apex-wrapper-salesforce-metadata-api/+&cd=1&hl=en&ct=clnk&gl=uk
-
     private static final Integer METADATA_API_VERSION = 
         Integer.valueOf(new MetadataService.MetadataPort().endpoint_x.substringAfterLast('/'));
 
@@ -50,7 +48,7 @@ public with sharing class CustomTemplateDataService {
             retrieveRequest.unpackaged = new MetadataService.Package_x();
             retrieveRequest.unpackaged.types = new List<MetadataService.PackageTypeMembers>();
             MetadataService.PackageTypeMembers packageType = new MetadataService.PackageTypeMembers();
-            packageType.name = 'AuraDefinitionBundle'; 
+            packageType.name = 'AuraDefinitionBundle';
             packageType.members = new String[] { '', templateName };
             retrieveRequest.unpackaged.types.add(packageType);
             return JSON.serialize(service.retrieve(retrieveRequest));
