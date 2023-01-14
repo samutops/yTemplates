@@ -25,6 +25,7 @@ export default class LoadTemplateExample extends LightningElement {
         checkAsyncRequest({ asyncResultId: this.asyncResult.id })
             .then((result) => {
                 this.retrieveResult = JSON.parse(result);
+                console.log(JSON.stringify(this.retrieveResult));
                 if (this.retrieveResult.done === true) {
                     this.loadZip(this.retrieveResult.zipFile);
                 }
@@ -36,7 +37,7 @@ export default class LoadTemplateExample extends LightningElement {
 
     handleToMetadataClick() {
         let componentMetadata = this.template.toMetadata();
-        console.log(JSON.parse(componentMetadata));
+        console.log(JSON.stringify(componentMetadata));
     }
 
     handleUpsertTemplateClick() {

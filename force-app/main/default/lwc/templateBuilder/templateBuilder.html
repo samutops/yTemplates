@@ -1,0 +1,44 @@
+<template>
+    <div class="slds-builder-header_container slds-is-relative">
+        <header class="slds-builder-header">
+            <div class="slds-builder-header__item">
+                <a href="#" class="slds-builder-header__item-action" title="Back" onclick={handleBackButtonClick}>
+                    <lightning-icon class="slds-current-color" icon-name="utility:back" alternative-text="Back" title="Back" size="x-small"></lightning-icon>
+                </a>
+            </div>
+            <div class="slds-builder-header__item">
+                <div class="slds-builder-header__item-label slds-media slds-media_center">
+                    <div class="slds-media__figure">
+                        <lightning-icon class="slds-current-color" icon-name="utility:builder" size="x-small"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">{templateLabel}</div>
+                </div>
+            </div>
+            <div class="slds-builder-header__item slds-has-flexi-truncate">
+                <h1 class="slds-builder-header__item-label">
+                    <span class="slds-truncate" title={templateDescription}>{templateDescription}</span>
+                </h1>
+            </div>
+            <div class="slds-builder-header__item slds-builder-header__utilities">
+                <div class="slds-builder-header__utilities-item">
+                    <a href="#" class="slds-builder-header__item-action slds-media slds-media_center">
+                        <span class="slds-media__figure">
+                            <lightning-icon class="slds-current-color" icon-name="utility:settings" alternative-text="Settings" title="Settings" size="x-small"></lightning-icon>
+                        </span>
+                        <span class="slds-media__body">
+                            <span class="slds-truncate" title="Settings">Settings</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="slds-builder-header__utilities-item">
+                    <a href="#" class="slds-builder-header__item-action slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <lightning-icon class="slds-current-color" icon-name="utility:help" alternative-text="Help" title="Help" size="x-small"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">Help</div>
+                    </a>
+                </div>
+            </div>
+        </header>
+    </div>
+</template>

@@ -1,0 +1,58 @@
+<template>
+    <template if:true={screenIsWelcome}>
+        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+            <div class="slds-col slds-size_1-of-2">
+                <div class="slds-welcome-mat slds-var-p-around_large">
+                    <div class="slds-welcome-mat__content slds-grid">
+                        <div class="slds-welcome-mat__info slds-size_1-of-2">
+                            <div class="slds-welcome-mat__info-content">
+                                <h2 class="slds-welcome-mat__info-title">yTemplates</h2>
+                                <p class="slds-welcome-mat__info-description slds-text-longform">Welcome to Template Manager, the ultimate declarative tool to create and edit your Lightning Page Templates.</p>
+                            </div>
+                        </div>
+                        <ul class="slds-welcome-mat__tiles slds-size_1-of-2">
+                            <li class="slds-welcome-mat__tile" onclick={handleNewTemplateButtonClick}>
+                                <a href="#" class="slds-box slds-box_link slds-media">
+                                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                        <div class="slds-welcome-mat__tile-figure">
+                                            <div class="slds-welcome-mat__tile-icon-container">
+                                                <lightning-icon icon-name="utility:builder" alternative-text="Create New Template" title="Create New Template"></lightning-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div class="slds-welcome-mat__tile-body">
+                                            <h3 class="slds-welcome-mat__tile-title">Create New Template</h3>
+                                            <p class="slds-welcome-mat__tile-description">Generate a new Lightning Page Template from scratch.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="slds-welcome-mat__tile" onclick={handleEditTemplateButtonClick}>
+                                <a href="#" class="slds-box slds-box_link slds-media">
+                                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                        <div class="slds-welcome-mat__tile-figure">
+                                            <div class="slds-welcome-mat__tile-icon-container">
+                                                <lightning-icon icon-name="utility:component_customization" alternative-text="Create New Template" title="Create New Template"></lightning-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <div class="slds-welcome-mat__tile-body">
+                                            <h3 class="slds-welcome-mat__tile-title">Modify Existing Template</h3>
+                                            <p class="slds-welcome-mat__tile-description">Modify a Lightning Page Template already created with yTemplates.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={screenIsCreate}>
+        <c-template-builder onclose={handleClose}></c-template-builder>
+    </template>
+    <template if:true={screenIsEdit}>Edit</template>
+</template>
