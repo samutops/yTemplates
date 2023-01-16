@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-builder-header_container slds-is-relative">
+    <div class="slds-builder-header_container builder-header">
         <header class="slds-builder-header">
             <div class="slds-builder-header__item">
                 <a href="#" class="slds-builder-header__item-action" title="Back" onclick={handleBackButtonClick}>
@@ -11,25 +11,15 @@
                     <div class="slds-media__figure">
                         <lightning-icon class="slds-current-color" icon-name="utility:builder" size="x-small"></lightning-icon>
                     </div>
-                    <div class="slds-media__body">{templateLabel}</div>
+                    <div class="slds-media__body" title="Template Builder">Lightning Template Builder</div>
                 </div>
             </div>
             <div class="slds-builder-header__item slds-has-flexi-truncate">
                 <h1 class="slds-builder-header__item-label">
-                    <span class="slds-truncate" title={templateDescription}>{templateDescription}</span>
+                    <span class="slds-truncate" title={templateLabel}>{templateLabel}</span>
                 </h1>
             </div>
             <div class="slds-builder-header__item slds-builder-header__utilities">
-                <div class="slds-builder-header__utilities-item">
-                    <a href="#" class="slds-builder-header__item-action slds-media slds-media_center">
-                        <span class="slds-media__figure">
-                            <lightning-icon class="slds-current-color" icon-name="utility:settings" alternative-text="Settings" title="Settings" size="x-small"></lightning-icon>
-                        </span>
-                        <span class="slds-media__body">
-                            <span class="slds-truncate" title="Settings">Settings</span>
-                        </span>
-                    </a>
-                </div>
                 <div class="slds-builder-header__utilities-item">
                     <a href="#" class="slds-builder-header__item-action slds-media slds-media_center">
                         <div class="slds-media__figure">
@@ -41,4 +31,51 @@
             </div>
         </header>
     </div>
+    <template if:true={screenIsCreate}>
+        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+            <div class="slds-col slds-size_1-of-2">
+                <div class="slds-var-p-around_large">
+                    <div class="slds-text-heading_medium slds-text-align_center slds-var-m-bottom_small">Template Information</div>
+                    <lightning-input name="templateLabel" type="text" label="Template Label" value={template.label} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                    <lightning-input name="templateDescription" type="text" label="Template Description" value={template.description} placeholder="Describe the purpose of this template" class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                    <lightning-combobox
+                        name="templateImplementation"
+                        label="Template Type"
+                        value={template.implements}
+                        options={templateImplementationOptions}
+                        placeholder="Select what type of Lightning Page will use this template"
+                        class="slds-var-m-bottom_medium"
+                        onchange={handleInputChange}
+                        required>
+                    </lightning-combobox>
+                    <div class="slds-text-align_right">
+                        <lightning-button variant="brand" label="Save" title="Save" onclick={handleSaveButtonClick}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={screenIsEdit}>
+        <div class="slds-grid builder">
+            <div class="slds-col builder-panel">
+                <div class="slds-panel slds-panel_docked slds-panel_docked-left slds-is-open" aria-hidden="false">
+                    <div class="slds-panel__header">
+                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">Panel Header</h2>
+                    </div>
+                    <div class="slds-panel__body">A panel body accepts any layout or component</div>
+                </div>
+            </div>
+            <div class="slds-col">
+                Content
+            </div>
+            <div class="slds-col builder-panel">
+                <div class="slds-panel slds-panel_docked slds-panel_docked-right slds-is-open" aria-hidden="false">
+                    <div class="slds-panel__header">
+                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">Panel Header</h2>
+                    </div>
+                    <div class="slds-panel__body">A panel body accepts any layout or component</div>
+                </div>
+            </div>
+        </div>
+    </template>
 </template>

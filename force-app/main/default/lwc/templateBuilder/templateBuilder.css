@@ -1,0 +1,19 @@
+:host {
+    background: white;
+    display: block;
+    height: 100%;
+}
+
+.builder-header {
+    position: relative;
+    z-index: inherit;
+}
+
+.builder {
+    height: calc(100% - 50px);
+}
+
+.builder-panel {
+    width: 320px;
+    flex: initial;
+}

@@ -9,7 +9,9 @@ class Template {
     supportedFormFactors;
 
     constructor(json){
-        Object.assign(this, json);
+        if (json) {
+            Object.assign(this, json);
+        }
     }
 
     toMetadata = () => {
