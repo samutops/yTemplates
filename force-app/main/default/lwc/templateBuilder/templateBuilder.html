@@ -1,4 +1,6 @@
 <template>
+    <c-jszip></c-jszip>
+    <lightning-spinner if:true={isLoading} alternative-text="Loading" size="large"></lightning-spinner>
     <div class="slds-builder-header_container builder-header">
         <header class="slds-builder-header">
             <div class="slds-builder-header__item">
@@ -37,9 +39,10 @@
                 <div class="slds-var-p-around_large">
                     <div class="slds-text-heading_medium slds-text-align_center slds-var-m-bottom_small">Template Information</div>
                     <lightning-input name="templateLabel" type="text" label="Template Label" value={template.label} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
-                    <lightning-input name="templateDescription" type="text" label="Template Description" value={template.description} placeholder="Describe the purpose of this template" class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                    <lightning-input name="templateName" type="text" label="Template Name" value={template.fullName} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                    <lightning-textarea name="templateDescription" type="text" label="Template Description" value={template.description} placeholder="Describe the purpose of this template" class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-textarea>
                     <lightning-combobox
-                        name="templateImplementation"
+                        name="templateImplements"
                         label="Template Type"
                         value={template.implements}
                         options={templateImplementationOptions}
@@ -49,7 +52,7 @@
                         required>
                     </lightning-combobox>
                     <div class="slds-text-align_right">
-                        <lightning-button variant="brand" label="Save" title="Save" onclick={handleSaveButtonClick}></lightning-button>
+                        <lightning-button variant="brand" label="Create" title="Create" onclick={handleCreateButtonClick} disabled={templateIsMissingRequiredFields}></lightning-button>
                     </div>
                 </div>
             </div>
@@ -60,7 +63,7 @@
             <div class="slds-col builder-panel">
                 <div class="slds-panel slds-panel_docked slds-panel_docked-left slds-is-open" aria-hidden="false">
                     <div class="slds-panel__header">
-                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">Panel Header</h2>
+                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Components">Components</h2>
                     </div>
                     <div class="slds-panel__body">A panel body accepts any layout or component</div>
                 </div>
@@ -71,9 +74,26 @@
             <div class="slds-col builder-panel">
                 <div class="slds-panel slds-panel_docked slds-panel_docked-right slds-is-open" aria-hidden="false">
                     <div class="slds-panel__header">
-                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">Panel Header</h2>
+                        <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Template">Template</h2>
                     </div>
-                    <div class="slds-panel__body">A panel body accepts any layout or component</div>
+                    <div class="slds-panel__body">
+                        <lightning-input name="templateLabel" type="text" label="Template Label" value={template.label} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                        <lightning-input name="templateName" type="text" label="Template Name" value={template.fullName} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                        <lightning-textarea name="templateDescription" type="text" label="Template Description" value={template.description} placeholder="Describe the purpose of this template" class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-textarea>
+                        <lightning-combobox
+                            name="templateImplements"
+                            label="Template Type"
+                            value={template.implements}
+                            options={templateImplementationOptions}
+                            placeholder="Select what type of Lightning Page will use this template"
+                            class="slds-var-m-bottom_medium"
+                            onchange={handleInputChange}
+                            required>
+                        </lightning-combobox>
+                        <div class="slds-text-align_right">
+                            <lightning-button variant="brand" label="Save" title="Save" onclick={handleSaveButtonClick}></lightning-button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

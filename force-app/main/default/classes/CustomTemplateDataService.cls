@@ -69,6 +69,7 @@ public with sharing class CustomTemplateDataService {
 
     @AuraEnabled
     public static void upsertTemplate(String auraBundleJSON){
+        System.debug(auraBundleJSON);
         try {
             MetadataService.AuraDefinitionBundle auraBundle1 = (MetadataService.AuraDefinitionBundle)JSON.deserialize(auraBundleJSON, MetadataService.AuraDefinitionBundle.class);
             

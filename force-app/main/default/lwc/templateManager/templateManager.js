@@ -1,31 +1,52 @@
 import { LightningElement } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getTemplates from '@salesforce/apex/CustomTemplateDataService.getTemplates';
 
 export default class TemplateManager extends LightningElement {
 
-    screen = 'welcome';
+    screen = 'menu';
+    templates = [];
+    selectedTemplateName;
 
     handleNewTemplateButtonClick() {
-        this.screen = 'create';
+        this.screen = 'builder';
     }
 
     handleEditTemplateButtonClick() {
-        this.screen = 'edit';
+        getTemplates()
+            .then((result) => {
+                this.templates = result;
+                this.screen = 'templates';
+            })
+            .catch((error) => {
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Error Loading Templates',
+                    message: error.body.message,
+                    variant: 'error'
+                }));
+            });
+    }
+
+    handleTemplateLinkClick(event) {
+        this.selectedTemplateName = event.currentTarget.dataset.templateName;
+        this.screen = 'builder';
     }
 
     handleClose() {
-        this.screen = 'welcome';
+        this.screen = 'menu';
+        this.selectedTemplateName = null;
     }
 
-    get screenIsWelcome() {
-        return this.screen == 'welcome';
+    get screenIsMenu() {
+        return this.screen == 'menu';
     }
 
-    get screenIsCreate() {
-        return this.screen == 'create';
+    get screenIsBuilder() {
+        return this.screen == 'builder';
     }
 
-    get screenIsEdit() {
-        return this.screen == 'edit';
+    get screenIsTemplates() {
+        return this.screen == 'templates';
     }
 
 }

@@ -11,7 +11,18 @@ class Template {
     constructor(json){
         if (json) {
             Object.assign(this, json);
+        } else {
+            this.apiVersion = '56.0';
+            this.regions = [];
+            this.supportedFormFactors = [];
         }
+    }
+
+    hasRequiredFields = () => {
+        if (this.fullName && this.label && this.description && this.implements) {
+            return true;
+        }
+        return false;
     }
 
     toMetadata = () => {
@@ -30,17 +41,19 @@ class Template {
     getMarkup() {
         let auraComponent = `<aura:component implements="${this.implements}" description="${this.description}">`;
 
-            this.regions.forEach(region => {
-                auraComponent += `<aura:attribute name="${region.name}" type="Aura.Component[]" />`;
-            });
+            if (this.regions.length > 0) {
+                this.regions.forEach(region => {
+                    auraComponent += `<aura:attribute name="${region.name}" type="Aura.Component[]" />`;
+                });
 
-            auraComponent += '<lightning:layout>';
-            this.regions.forEach(region => {
-                auraComponent += `<lightning:layoutItem flexibility="${region.flexibility}" size="${region.size}" class="${region.class}">`;
-                    auraComponent += `{!v.${region.name}}`;
-                auraComponent += '</lightning:layoutItem>';
-            });
-            auraComponent += '</lightning:layout>';
+                auraComponent += '<lightning:layout>';
+                this.regions.forEach(region => {
+                    auraComponent += `<lightning:layoutItem flexibility="${region.flexibility}" size="${region.size}" class="${region.class}">`;
+                        auraComponent += `{!v.${region.name}}`;
+                    auraComponent += '</lightning:layoutItem>';
+                });
+                auraComponent += '</lightning:layout>';
+            }
 
         auraComponent += '</aura:component>';
         return auraComponent;
@@ -49,23 +62,27 @@ class Template {
     getDesign() {
         let designComponent = `<design:component label="${this.label}">`;
 
-            designComponent += '<flexipage:template>';
-            this.regions.forEach(region => {
-                designComponent += `<flexipage:region name="${region.name}" label="${region.label}" defaultWidth="${region.defaultWidth}">`;
+            if (this.regions.length > 0) {
+                designComponent += '<flexipage:template>';
+                this.regions.forEach(region => {
+                    designComponent += `<flexipage:region name="${region.name}" label="${region.label}" defaultWidth="${region.defaultWidth}">`;
 
-                if (region.hasOwnProperty("formFactor")) {
-                    designComponent += `<flexipage:formfactor type="${region.formFactor.type}" width="${region.formFactor.width}" />`;
-                }
+                    if (region.hasOwnProperty("formFactor")) {
+                        designComponent += `<flexipage:formfactor type="${region.formFactor.type}" width="${region.formFactor.width}" />`;
+                    }
 
-                designComponent += '</flexipage:region>';
-            });
-            designComponent += '</flexipage:template>';
+                    designComponent += '</flexipage:region>';
+                });
+                designComponent += '</flexipage:template>';
+            }
 
-            designComponent += '<design:supportedFormFactors>';
-            this.supportedFormFactors.forEach(formFactor => {
-                designComponent += `<design:supportedFormFactor type="${formFactor.type}" />`;
-            });
-            designComponent += '</design:supportedFormFactors>';
+            if (this.supportedFormFactors.length > 0) {
+                designComponent += '<design:supportedFormFactors>';
+                this.supportedFormFactors.forEach(formFactor => {
+                    designComponent += `<design:supportedFormFactor type="${formFactor.type}" />`;
+                });
+                designComponent += '</design:supportedFormFactors>';
+            }
 
         designComponent += '</design:component>';
         return designComponent;
