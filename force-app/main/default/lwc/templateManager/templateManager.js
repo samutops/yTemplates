@@ -5,6 +5,7 @@ import getTemplates from '@salesforce/apex/CustomTemplateDataService.getTemplate
 export default class TemplateManager extends LightningElement {
 
     screen = 'menu';
+    isLoading = false;
     templates = [];
     selectedTemplateName;
 
@@ -13,6 +14,7 @@ export default class TemplateManager extends LightningElement {
     }
 
     handleEditTemplateButtonClick() {
+        this.isLoading = true;
         getTemplates()
             .then((result) => {
                 this.templates = result;
@@ -24,6 +26,9 @@ export default class TemplateManager extends LightningElement {
                     message: error.body.message,
                     variant: 'error'
                 }));
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
     }
 

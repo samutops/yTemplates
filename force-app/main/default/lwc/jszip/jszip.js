@@ -9,7 +9,7 @@ export default class Jszip extends LightningElement {
             loadScript(this, jszip + '/jszip.min.js')
         ])
             .then(() => {
-                console.log('JSZip loaded!');
+                //console.log('JSZip loaded!');
             })
             .catch((error) => {
                 this.dispatchEvent(

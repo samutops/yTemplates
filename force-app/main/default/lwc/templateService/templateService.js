@@ -4,6 +4,11 @@ class Template {
     description;
     apiVersion;
 
+    horizontalAlign; // center, space, spread, end
+    verticalAlign; // start, center, end, stretch
+    pullToBoundary; // small, medium, large
+    multipleRows; // true, false
+
     implements; // lightning:appHomeTemplate, lightning:homeTemplate, lightning:recordHomeTemplate
     regions;
     supportedFormFactors;
@@ -46,9 +51,9 @@ class Template {
                     auraComponent += `<aura:attribute name="${region.name}" type="Aura.Component[]" />`;
                 });
 
-                auraComponent += '<lightning:layout>';
+                auraComponent += `<lightning:layout horizontalAlign="${this.horizontalAlign || ''}" verticalAlign="${this.verticalAlign || ''}" pullToBoundary="${this.pullToBoundary || ''}" multipleRows="${this.multipleRows || ''}">`;
                 this.regions.forEach(region => {
-                    auraComponent += `<lightning:layoutItem flexibility="${region.flexibility}" size="${region.size}" class="${region.class}">`;
+                    auraComponent += `<lightning:layoutItem alignmentBump="${region.alignmentBump || ''}" flexibility="${region.flexibility || ''}" size="${region.size || ''}" smallDeviceSize="${region.smallDeviceSize || ''}" mediumDeviceSize="${region.mediumDeviceSize || ''}" largeDeviceSize="${region.largeDeviceSize || ''}" padding="${region.padding || ''}" class="${region.class || ''}">`;
                         auraComponent += `{!v.${region.name}}`;
                     auraComponent += '</lightning:layoutItem>';
                 });
@@ -66,16 +71,13 @@ class Template {
                 designComponent += '<flexipage:template>';
                 this.regions.forEach(region => {
                     designComponent += `<flexipage:region name="${region.name}" label="${region.label}" defaultWidth="${region.defaultWidth}">`;
-
-                    if (region.hasOwnProperty("formFactor")) {
+                    if (region.hasOwnProperty("formFactor") && region.formFactor) {
                         designComponent += `<flexipage:formfactor type="${region.formFactor.type}" width="${region.formFactor.width}" />`;
                     }
-
                     designComponent += '</flexipage:region>';
                 });
                 designComponent += '</flexipage:template>';
             }
-
             if (this.supportedFormFactors.length > 0) {
                 designComponent += '<design:supportedFormFactors>';
                 this.supportedFormFactors.forEach(formFactor => {
@@ -101,9 +103,14 @@ class Template {
 class Region {
     name;
     label;
-    defaultWidth; // SMALL, MEDIUM, LARGE
-    flexibility;
+    defaultWidth; // Small, Medium, Large
+    flexibility; // auto, shrink, no-shrink, grow, no-grow, no-flex
+    padding; // horizontal-small, horizontal-medium, horizontal-large, around-small, around-medium, around-large
+    alignmentBump; // left, top, right, bottom
     size;
+    smallDeviceSize;
+    mediumDeviceSize;
+    largeDeviceSize;
     class;
     formFactor;
 };

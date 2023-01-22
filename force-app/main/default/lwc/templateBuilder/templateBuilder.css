@@ -17,3 +17,27 @@
     width: 320px;
     flex: initial;
 }
+
+.builder-render {
+    background: #eee;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.region-item {
+    border: 2px #555;
+    border-style: dotted;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+}
+
+.region-item:hover {
+    cursor: pointer;
+    background: #FFF;
+    text-decoration: none;
+    color: #000;
+}
