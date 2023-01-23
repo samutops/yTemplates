@@ -18,7 +18,7 @@
             </div>
             <div class="slds-builder-header__item slds-has-flexi-truncate">
                 <h1 class="slds-builder-header__item-label">
-                    <span class="slds-truncate" title={templateLabel}>{templateLabel}</span>
+                    <span class="slds-truncate" title={template.label}>{template.label}</span>
                 </h1>
             </div>
             <div class="slds-builder-header__item slds-builder-header__utilities">
@@ -37,7 +37,7 @@
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center">
             <div class="slds-col slds-size_1-of-2">
                 <div class="slds-var-p-around_large">
-                    <div class="slds-text-heading_medium slds-text-align_center slds-var-m-bottom_small">Template Information</div>
+                    <div class="slds-text-heading_medium slds-text-align_center slds-var-m-bottom_small">Template</div>
                     <lightning-input name="templateLabel" type="text" label="Template Label" value={template.label} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
                     <lightning-input name="templateName" type="text" label="Template Name" value={template.fullName} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
                     <lightning-textarea name="templateDescription" type="text" label="Template Description" value={template.description} placeholder="Describe the purpose of this template" class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-textarea>
@@ -45,14 +45,28 @@
                         name="templateImplements"
                         label="Template Type"
                         value={template.implements}
-                        options={templateImplementationOptions}
+                        options={implementationOptions}
                         placeholder="Select what type of Lightning Page will use this template"
-                        class="slds-var-m-bottom_medium"
+                        class="slds-var-m-bottom_small"
                         onchange={handleInputChange}
                         required>
                     </lightning-combobox>
+                    <lightning-dual-listbox
+                        name="templateSupportedFormFactors"
+                        label="Template Form Factors"
+                        source-label="Available"
+                        selected-label="Selected"
+                        value={selectedSupportedFormFactors}
+                        options={supportedFormFactorsOptions}
+                        size="2"
+                        min="1"
+                        disable-reordering
+                        required
+                        class="slds-var-m-bottom_medium"
+                        onchange={handleInputChange}>
+                    </lightning-dual-listbox>
                     <div class="slds-text-align_right">
-                        <lightning-button variant="brand" label="Create" title="Create" onclick={handleCreateButtonClick} disabled={templateIsMissingRequiredFields}></lightning-button>
+                        <lightning-button variant="brand" label="Create" title="Create" onclick={handleCreateTemplateButtonClick} disabled={templateIsMissingRequiredFields}></lightning-button>
                     </div>
                 </div>
             </div>
@@ -74,7 +88,7 @@
                 </div>
             </div>
             <div class="slds-col">
-                <div class="builder-render">
+                <div class="builder-render slds-scrollable" onclick={handleResetButtonClick}>
                     <template if:true={regions}>
                         <lightning-layout 
                             horizontal-align={template.horizontalAlign} 
@@ -84,7 +98,7 @@
                         >
                             <template for:each={regions} for:item="region">
                                 <lightning-layout-item
-                                    key={region.name} 
+                                    key={region.id} 
                                     alignment-bump={region.alignmentBump}
                                     flexibility={region.flexibility} 
                                     size={region.size}
@@ -94,7 +108,7 @@
                                     padding={region.padding}
                                     class={region.class}
                                 >
-                                    <a onclick={handleOnRegionSelect} data-region-name={region.name} class="region-item">{region.label}</a>
+                                    <a onclick={handleOnRegionSelect} data-region-id={region.id} class="region-item">{region.label}</a>
                                 </lightning-layout-item>
                             </template>
                         </lightning-layout>
@@ -109,27 +123,41 @@
                         </div>
                         <div class="slds-panel__body">
                             <lightning-input name="templateLabel" type="text" label="Template Label" value={template.label} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
-                            <lightning-input name="templateName" type="text" label="Template Name" value={template.fullName} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="templateName" type="text" label="Template Name" value={template.fullName} class="slds-var-m-bottom_small" disabled></lightning-input>
                             <lightning-textarea name="templateDescription" type="text" label="Template Description" value={template.description} class="slds-var-m-bottom_small" required onchange={handleInputChange}></lightning-textarea>
                             <lightning-combobox
                                 name="templateImplements"
                                 label="Template Type"
                                 value={template.implements}
-                                options={templateImplementationOptions}
-                                class="slds-var-m-bottom_x-small"
+                                options={implementationOptions}
+                                class="slds-var-m-bottom_small"
                                 onchange={handleInputChange}
                                 required>
                             </lightning-combobox>
+                            <lightning-dual-listbox
+                                name="templateSupportedFormFactors"
+                                label="Template Form Factors"
+                                source-label="Available"
+                                selected-label="Selected"
+                                value={selectedSupportedFormFactors}
+                                options={supportedFormFactorsOptions}
+                                size="2"
+                                min="1"
+                                disable-reordering
+                                required
+                                class="slds-var-m-bottom_x-small"
+                                onchange={handleInputChange}>
+                            </lightning-dual-listbox>
                         </div>
                         <div class="slds-panel__header slds-border_top">
-                            <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Template Layout">Template Layout</h2>
+                            <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Layout">Layout</h2>
                         </div>
                         <div class="slds-panel__body">
                             <lightning-combobox
                                 name="templateHorizontalAlign"
                                 label="Horizontal Alignment"
                                 value={template.horizontalAlign}
-                                options={templateHorizontalAlignmentOptions}
+                                options={horizontalAlignmentOptions}
                                 class="slds-var-m-bottom_medium"
                                 onchange={handleInputChange}>
                             </lightning-combobox>
@@ -137,7 +165,7 @@
                                 name="templateVerticalAlign"
                                 label="Vertical Alignment"
                                 value={template.verticalAlign}
-                                options={templateVerticalAlignmentOptions}
+                                options={verticalAlignmentOptions}
                                 class="slds-var-m-bottom_medium"
                                 onchange={handleInputChange}>
                             </lightning-combobox>
@@ -145,13 +173,13 @@
                                 name="templatePullToBoundary"
                                 label="Pull to Boundary"
                                 value={template.pullToBoundary}
-                                options={templatePullToBoundaryOptions}
+                                options={pullToBoundaryOptions}
                                 class="slds-var-m-bottom_medium"
                                 onchange={handleInputChange}>
                             </lightning-combobox>
                             <lightning-input name="templateMultipleRows" type="checkbox" label="Multiple Rows" value={template.multipleRows} class="slds-var-m-bottom_small" onchange={handleInputChange}></lightning-input>
                             <div class="slds-text-align_right">
-                                <lightning-button variant="brand" label="Save" title="Save" onclick={handleCreateButtonClick}></lightning-button>
+                                <lightning-button variant="brand" label="Save" title="Save" onclick={handleCreateTemplateButtonClick}></lightning-button>
                             </div>
                         </div>
                     </template>
@@ -173,7 +201,7 @@
                             </lightning-combobox>
                         </div>
                         <div class="slds-panel__header slds-border_top">
-                            <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Region Layout">Region Layout</h2>
+                            <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Layout">Layout</h2>
                         </div>
                         <div class="slds-panel__body">
                             <lightning-combobox
@@ -220,7 +248,7 @@
                                 name="regionPadding"
                                 label="Padding"
                                 value={selectedRegion.padding}
-                                options={templatePaddingOptions}
+                                options={paddingOptions}
                                 class="slds-var-m-bottom_medium"
                                 onchange={handleInputChange}>
                             </lightning-combobox>
@@ -228,14 +256,13 @@
                                 name="regionAlignmentBump"
                                 label="Alignment Bump"
                                 value={selectedRegion.alignmentBump}
-                                options={templateAlignmentBumpOptions}
+                                options={alignmentBumpOptions}
                                 class="slds-var-m-bottom_medium"
                                 onchange={handleInputChange}>
                             </lightning-combobox>
                             <lightning-input name="regionClass" type="text" label="Class" value={selectedRegion.class} class="slds-var-m-bottom_small" onchange={handleInputChange}></lightning-input>
                             <div class="slds-text-align_right">
-                                <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleCancelAddRegionButtonClick}></lightning-button>
-                                <lightning-button variant="brand" label="Save" title="Save" class="slds-var-m-left_x-small" onclick={handleSaveRegionButtonClick}></lightning-button>
+                                <lightning-button variant="destructive" label="Delete" title="Delete" onclick={handleDeleteRegionButtonClick}></lightning-button>
                             </div>
                         </div>
                     </template>

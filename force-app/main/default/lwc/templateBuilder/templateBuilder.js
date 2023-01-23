@@ -4,25 +4,28 @@ import retrieveTemplate from '@salesforce/apex/CustomTemplateDataService.retriev
 import checkAsyncRequest from '@salesforce/apex/CustomTemplateDataService.checkAsyncRequest';
 import upsertTemplate from '@salesforce/apex/CustomTemplateDataService.upsertTemplate';
 import { Template, Region, FormFactor } from 'c/templateService';
+import { ID_LENGTH, generateRandomString } from 'c/templateUtils';
 
 export default class TemplateBuilder extends LightningElement {
 
-    @track template = new Template();
+    // Screen
+    screen = 'create';
+
+    // Loading Template
     asyncResult;
     retrieveResult;
     pollTimer;
     isLoading = false;
 
-    templateLabel;
+    // Template
+    @track template = new Template();
     templateIsMissingRequiredFields = true;
+    selectedSupportedFormFactors = [];
 
     // Region
-    regions = [];
-    selectedRegionName;
-    selectedRegion;
+    @track regions = [];
+    @track selectedRegion;
     isCreatingRegion = false;
-
-    screen = 'create';
 
     get templateName() {
         return null;
@@ -89,13 +92,16 @@ export default class TemplateBuilder extends LightningElement {
                 break;
             case 'templateLabel':
                 this.template.label = value;
-                this.templateLabel = value;
                 break;
             case 'templateDescription':
                 this.template.description = value;
                 break;
             case 'templateImplements':
                 this.template.implements = picklistValue;
+                this.selectedSupportedFormFactors = []; // The user has to select the form factors again
+                break;
+            case 'templateSupportedFormFactors':
+                this.selectedSupportedFormFactors = picklistValue;
                 break;
             case 'templateHorizontalAlign':
                 this.template.horizontalAlign = picklistValue;
@@ -107,7 +113,7 @@ export default class TemplateBuilder extends LightningElement {
                 this.template.pullToBoundary = picklistValue;
                 break;
             case 'templateMultipleRows':
-                this.template.implements = checkboxValue;
+                this.template.multipleRows = checkboxValue;
                 break;
             case 'regionLabel':
                 this.selectedRegion.label = value;
@@ -146,24 +152,28 @@ export default class TemplateBuilder extends LightningElement {
                 break;
         }
 
+        // Little trick so the page re-renders the changes
+        this.regions = [...this.regions]; 
+
         this.templateIsMissingRequiredFields = !this.template.hasRequiredFields();
     }
 
-    handleCreateButtonClick() {
+    handleCreateTemplateButtonClick() {
         this.template.regions = this.regions;
+        this.template.supportedFormFactors = this.selectedSupportedFormFactors.map(formFactorType => new FormFactor().setType(formFactorType));
         console.log(this.template.toMetadata());
 
         upsertTemplate({ auraBundleJSON: this.template.toMetadata() })
             .then((result) => {
                 this.screen = 'edit';
                 this.dispatchEvent(new ShowToastEvent({
-                    title: 'Template Created Successfully!',
+                    title: 'Template Saved Successfully!',
                     variant: 'success'
                 }));
             })
             .catch((error) => {
                 this.dispatchEvent(new ShowToastEvent({
-                    title: 'Error Creating Template',
+                    title: 'Error Saving Template',
                     message: error.body.message,
                     variant: 'error'
                 }));
@@ -171,37 +181,36 @@ export default class TemplateBuilder extends LightningElement {
     }
 
     handleOnRegionSelect(event) {
-        const regionName = event.detail.name || event.currentTarget.dataset.regionName;
+        event.stopPropagation();
+
+        const regionName = event.detail.name;
+        const regionId = event.currentTarget.dataset.regionId;
         if (regionName) {
-            this.selectedRegionName = regionName;
-            this.selectedRegion = this.regions.find(region => region.name == this.selectedRegionName);
+            this.selectedRegion = this.regions.find(region => region.name == regionName);
+        } else if (regionId) {
+            this.selectedRegion = this.regions.find(region => region.id == regionId);
         }
     }
 
     handleAddRegionButtonClick(event) {
-        this.selectedRegion = new Region();
+        let region = new Region();
+        region.id = generateRandomString(ID_LENGTH);
+        this.regions.push(region);
+        this.selectedRegion = region;
         this.isCreatingRegion = true;
     }
 
-    handleCancelAddRegionButtonClick() {
-        this.selectedRegionName = undefined;
-        this.selectedRegion = undefined;
-        this.isCreatingRegion = false;
+    handleDeleteRegionButtonClick(event) {
+        this.regions = this.regions.filter(region => region.id != this.selectedRegion.id);
+        this.handleResetButtonClick();
     }
 
-    handleSaveRegionButtonClick() {
-        const newRegions = Array.from(this.regions);
-        if (!this.regions.some(region => region.name == this.selectedRegion.name)) {
-            newRegions.push(this.selectedRegion);
-        }
-        this.regions = newRegions;
-        this.selectedRegionName = undefined;
+    handleResetButtonClick() {
         this.selectedRegion = undefined;
         this.isCreatingRegion = false;
     }
 
     loadZip(zipFile) {
-        
         let newZip = new JSZip();
         newZip
             .loadAsync(zipFile, { base64: true })
@@ -222,6 +231,7 @@ export default class TemplateBuilder extends LightningElement {
 
                             // Parse JSON
                             this.template = new Template(JSON.parse(el.innerHTML));
+                            this.selectedSupportedFormFactors = this.template.supportedFormFactors.map(formFactor => formFactor.type);
                             this.regions = this.template.regions ? this.template.regions : [];
                             this.isLoading = false;
                         });
@@ -239,14 +249,6 @@ export default class TemplateBuilder extends LightningElement {
                     })
                 );
             });
-    }
-
-    get templateImplementationOptions() {
-        return [
-            { label: 'Record Page', value: 'lightning:recordHomeTemplate' },
-            { label: 'App Page', value: 'lightning:appHomeTemplate' },
-            { label: 'Home Page', value: 'lightning:homeTemplate' }
-        ];
     }
 
     get sizeOptions() {
@@ -268,6 +270,7 @@ export default class TemplateBuilder extends LightningElement {
 
     get flexibilityOptions() {
         return [
+            { label: '--- None ---', value: '' },
             { label: 'Auto', value: 'auto' },
             { label: 'Shrink', value: 'shrink' },
             { label: 'No Shrink', value: 'no-shrink' },
@@ -277,8 +280,17 @@ export default class TemplateBuilder extends LightningElement {
         ];
     }
 
-    get templateHorizontalAlignmentOptions() {
+    get implementationOptions() {
         return [
+            { label: 'Record Page', value: 'lightning:recordHomeTemplate' },
+            { label: 'App Page', value: 'lightning:appHomeTemplate' },
+            { label: 'Home Page', value: 'lightning:homeTemplate' }
+        ];
+    }
+
+    get horizontalAlignmentOptions() {
+        return [
+            { label: '--- None ---', value: '' },
             { label: 'Center', value: 'center' },
             { label: 'Space', value: 'space' },
             { label: 'Spread', value: 'spread' },
@@ -286,8 +298,9 @@ export default class TemplateBuilder extends LightningElement {
         ];
     }
 
-    get templateVerticalAlignmentOptions() {
+    get verticalAlignmentOptions() {
         return [
+            { label: '--- None ---', value: '' },
             { label: 'Start', value: 'start' },
             { label: 'Center', value: 'center' },
             { label: 'End', value: 'end' },
@@ -295,16 +308,18 @@ export default class TemplateBuilder extends LightningElement {
         ];
     }
 
-    get templatePullToBoundaryOptions() {
+    get pullToBoundaryOptions() {
         return [
+            { label: '--- None ---', value: '' },
             { label: 'Small', value: 'small' },
             { label: 'Medium', value: 'medium' },
             { label: 'Large', value: 'large' }
         ];
     }
 
-    get templateAlignmentBumpOptions() {
+    get alignmentBumpOptions() {
         return [
+            { label: '--- None ---', value: '' },
             { label: 'Left', value: 'left' },
             { label: 'Top', value: 'top' },
             { label: 'Right', value: 'right' },
@@ -312,8 +327,9 @@ export default class TemplateBuilder extends LightningElement {
         ];
     }
 
-    get templatePaddingOptions() {
+    get paddingOptions() {
         return [
+            { label: '--- None ---', value: '' },
             { label: 'Horizontal Small', value: 'horizontal-small' },
             { label: 'Horizontal Medium', value: 'horizontal-medium' },
             { label: 'Horizontal Large', value: 'horizontal-large' },
@@ -321,6 +337,15 @@ export default class TemplateBuilder extends LightningElement {
             { label: 'Around Medium', value: 'around-medium' },
             { label: 'Around Large', value: 'around-large' }
         ];
+    }
+
+    get supportedFormFactorsOptions() {
+        let options = [];
+        if (this.template.implements !== 'lightning:homeTemplate') { // Home pages support only the Large form factor
+            options.push({ label: 'Small', value: 'Small' });
+        }
+        options.push({ label: 'Large', value: 'Large' });
+        return options;
     }
 
     get screenIsCreate() {

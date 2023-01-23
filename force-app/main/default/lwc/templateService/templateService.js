@@ -51,9 +51,24 @@ class Template {
                     auraComponent += `<aura:attribute name="${region.name}" type="Aura.Component[]" />`;
                 });
 
-                auraComponent += `<lightning:layout horizontalAlign="${this.horizontalAlign || ''}" verticalAlign="${this.verticalAlign || ''}" pullToBoundary="${this.pullToBoundary || ''}" multipleRows="${this.multipleRows || ''}">`;
+                auraComponent += "<lightning:layout";
+                if (this.horizontalAlign) auraComponent += ` horizontalAlign="${this.horizontalAlign}"`;
+                if (this.verticalAlign) auraComponent += ` verticalAlign="${this.verticalAlign}"`;
+                if (this.pullToBoundary) auraComponent += ` pullToBoundary="${this.pullToBoundary}"`;
+                if (this.multipleRows) auraComponent += ` multipleRows="${this.multipleRows}"`;
+                auraComponent += ">";
+
                 this.regions.forEach(region => {
-                    auraComponent += `<lightning:layoutItem alignmentBump="${region.alignmentBump || ''}" flexibility="${region.flexibility || ''}" size="${region.size || ''}" smallDeviceSize="${region.smallDeviceSize || ''}" mediumDeviceSize="${region.mediumDeviceSize || ''}" largeDeviceSize="${region.largeDeviceSize || ''}" padding="${region.padding || ''}" class="${region.class || ''}">`;
+                    auraComponent += "<lightning:layoutItem";
+                    if (region.alignmentBump) auraComponent += ` alignmentBump="${region.alignmentBump}"`;
+                    if (region.flexibility) auraComponent += ` flexibility="${region.flexibility}"`;
+                    if (region.size) auraComponent += ` size="${region.size}"`;
+                    if (region.smallDeviceSize) auraComponent += ` smallDeviceSize="${region.smallDeviceSize}"`;
+                    if (region.mediumDeviceSize) auraComponent += ` mediumDeviceSize="${region.mediumDeviceSize}"`;
+                    if (region.largeDeviceSize) auraComponent += ` largeDeviceSize="${region.largeDeviceSize}"`;
+                    if (region.padding) auraComponent += ` padding="${region.padding}"`;
+                    if (region.class) auraComponent += ` class="${region.class}"`;
+                    auraComponent += ">";
                         auraComponent += `{!v.${region.name}}`;
                     auraComponent += '</lightning:layoutItem>';
                 });
@@ -71,8 +86,10 @@ class Template {
                 designComponent += '<flexipage:template>';
                 this.regions.forEach(region => {
                     designComponent += `<flexipage:region name="${region.name}" label="${region.label}" defaultWidth="${region.defaultWidth}">`;
-                    if (region.hasOwnProperty("formFactor") && region.formFactor) {
-                        designComponent += `<flexipage:formfactor type="${region.formFactor.type}" width="${region.formFactor.width}" />`;
+                    if (region.formFactors && region.formFactors.length > 0) {
+                        region.formFactors.forEach(formFactor => {
+                            designComponent += `<flexipage:formfactor type="${formFactor.type}" width="${formFactor.width}" />`;
+                        });
                     }
                     designComponent += '</flexipage:region>';
                 });
@@ -101,6 +118,7 @@ class Template {
 };
 
 class Region {
+    id;
     name;
     label;
     defaultWidth; // Small, Medium, Large
@@ -112,12 +130,21 @@ class Region {
     mediumDeviceSize;
     largeDeviceSize;
     class;
-    formFactor;
+    formFactors;
+
+    constructor(){
+        this.formFactors = [];
+    }
 };
 
 class FormFactor {
-    type; // Small, Large
+    type; // Small, Medium, Large
     width; // Small, Medium, Large, Xlarge
+
+    setType = (type) => {
+        this.type = type;
+        return this;
+    }
 };
 
 export {

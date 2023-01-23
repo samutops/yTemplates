@@ -27,7 +27,6 @@
 .region-item {
     border: 2px #555;
     border-style: dotted;
-    padding: 0.5rem;
     border-radius: 5px;
     display: block;
     text-decoration: none;
