@@ -357,7 +357,7 @@ export default class TemplateBuilder extends LightningElement {
     }
 
     get regionPanelHeader() {
-        return this.isCreatingRegion ? 'New Region' : 'Selected Region';
+        return this.isCreatingRegion ? 'New Region' : 'Region Information';
     }
 
 }

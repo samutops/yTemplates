@@ -15,6 +15,5 @@ package.xml
 **/appMenus/**
 **/authproviders/**
 **/connectedApps/**
-**/flexipages/**
 **/namedCredentials/**
 **/profiles/**

@@ -16,8 +16,9 @@ public with sharing class CustomTemplateDataService {
 		    MetadataService.FileProperties[] fileProperties = service.listMetadata(queries, METADATA_API_VERSION);
 		
 		    // Sort
-		    List<String> fullNames = new List<String>();
+		    List<String> fullNames;
 		    if(fileProperties!=null) {
+                fullNames = new List<String>();
 			    for(MetadataService.FileProperties fileProperty : fileProperties) {
                     String fullName;
                     if (String.isNotBlank(fileProperty.namespacePrefix)) {
@@ -28,12 +29,11 @@ public with sharing class CustomTemplateDataService {
                     fullNames.add(fullName);
                 }
 			    fullNames.sort();
-			    return fullNames;
             }
+            return fullNames;
 		} catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     @AuraEnabled
@@ -100,35 +100,39 @@ public with sharing class CustomTemplateDataService {
 
     private static void handleUpsertResults(MetadataService.UpsertResult upsertResult)
     {
-        // Nothing to see?
-        if(upsertResult==null || upsertResult.success)
+        if(upsertResult == null || upsertResult.success) {
             return;
+        }
 
-        // Construct error message and throw an exception
-        if(upsertResult.errors!=null)
-        {
+        if(upsertResult.errors != null) {
             List<String> messages = new List<String>();
             messages.add(
                 (upsertResult.errors.size()==1 ? 'Error ' : 'Errors ') +
                     'occured processing component ' + upsertResult.fullName + '.');
-            for(MetadataService.Error error : upsertResult.errors)
+
+            for(MetadataService.Error error : upsertResult.errors) {
                 messages.add(
                     error.message + ' (' + error.statusCode + ').' +
                     ( error.fields!=null && error.fields.size()>0 ?
                         ' Fields ' + String.join(error.fields, ',') + '.' : '' ) );
-            if(messages.size()>0)
+            }
+
+            if(messages.size() > 0) {
                 throw new CustomTemplateDataServiceException(String.join(messages, ' '));
+            }
         }
-        if(!upsertResult.success)
+
+        if(!upsertResult.success) {
             throw new CustomTemplateDataServiceException('Request failed with no specified error.');
+        }
     }
 
     private static void keepConnectionOpen() {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:yTemplates/services/data/v53.0/limits');
+        req.setEndpoint('callout:yTemplates/services/data/v56.0/limits');
         req.setMethod('GET');
-        HttpResponse res = h.send(req);
+        if (!Test.isRunningTest()) HttpResponse res = h.send(req);
     }
 
 }
