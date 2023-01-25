@@ -4,9 +4,9 @@
             "path": "force-app",
             "default": true,
             "package": "yTemplates",
-            "versionName": "v0.1.0",
-            "versionNumber": "0.1.0.NEXT",
-            "versionDescription": "Easy-to-use, declarative Lightning Template management for Salesforce"
+            "versionNumber": "0.2.0.NEXT",
+            "versionDescription": "Easy-to-use, declarative Lightning Template management for Salesforce",
+            "ancestorVersion": "0.1.0"
         }
     ],
     "name": "yTemplates",
@@ -15,6 +15,7 @@
     "sourceApiVersion": "56.0",
     "packageAliases": {
         "yTemplates": "0Ho4J00000000fvSAA",
-        "yTemplates@0.1.0-1": "04t4J000001wsmpQAA"
+        "yTemplates@0.1.0-1": "04t4J000001wsmpQAA",
+        "yTemplates@0.2.0-1": "04t4J000001wsmzQAA"
     }
 }
