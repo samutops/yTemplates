@@ -1,21 +1,22 @@
 {
-    "packageDirectories": [
-        {
-            "path": "force-app",
-            "default": true,
-            "package": "yTemplates",
-            "versionNumber": "0.2.0.NEXT",
-            "versionDescription": "Easy-to-use, declarative Lightning Template management for Salesforce",
-            "ancestorVersion": "0.1.0"
-        }
-    ],
-    "name": "yTemplates",
-    "namespace": "yTemplates",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "56.0",
-    "packageAliases": {
-        "yTemplates": "0Ho4J00000000fvSAA",
-        "yTemplates@0.1.0-1": "04t4J000001wsmpQAA",
-        "yTemplates@0.2.0-1": "04t4J000001wsmzQAA"
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "yTemplates",
+      "versionNumber": "0.3.0.NEXT",
+      "versionDescription": "Easy-to-use, declarative Lightning Template management for Salesforce",
+      "ancestorVersion": "HIGHEST"
     }
+  ],
+  "name": "yTemplates",
+  "namespace": "yTemplates",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "56.0",
+  "packageAliases": {
+    "yTemplates": "0Ho4J00000000fvSAA",
+    "yTemplates@0.1.0-1": "04t4J000001wsmpQAA",
+    "yTemplates@0.2.0-1": "04t4J000001wsmzQAA",
+    "yTemplates@0.3.0-1": "04tQ5000002BvmbIAC"
+  }
 }

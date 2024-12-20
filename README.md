@@ -1,18 +1,24 @@
-# Salesforce DX Project: Next Steps
+# yTemplates
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Declarative, easy-to-use, Salesforce Lightning Page Template management for everyone.
 
-## How Do You Plan to Deploy Your Changes?
+With yTemplates you can:
+- Create new Lightning Page Templates or modify existing ones that were created using yTemplates.
+- Design templates for the Home page, App pages, or Record pages.
+- Use a familiar-looking UI to build templates declaratively.
+- Design responsive templates that adapt to various screen sizes.
+- Use a wide range of settings to define how each region looks and fits within the template.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+# Installation
 
-## Configure Your Salesforce DX Project
+## From AppExchange
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+[AppExchange Listing](https://appexchange.salesforce.com/appxListingDetail?listingId=a0N4V00000DZEmIUAX)
 
-## Read All About It
+## From CLI
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+`sf package install --wait 20 --security-type AdminsOnly --package 04tQ5000002BvmbIAC`
+
+# Setup and User Guide
+
+[Setup and User Guide](https://drive.google.com/file/d/10koKd9dJvPu30fTfg1XxsvtX1GycGvI8/view?usp=share_link)

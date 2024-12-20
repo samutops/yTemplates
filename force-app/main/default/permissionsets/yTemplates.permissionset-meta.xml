@@ -15,4 +15,8 @@
     <description>Provides users with access to the yTemplates app.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>yTemplates</label>
+    <tabSettings>
+        <tab>Template_Manager</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

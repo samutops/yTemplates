@@ -16,4 +16,5 @@ package.xml
 **/authproviders/**
 **/connectedApps/**
 **/namedCredentials/**
+**/externalCredentials/**
 **/profiles/**
